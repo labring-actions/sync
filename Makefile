@@ -32,7 +32,7 @@ build: clean ## Build service-hub binary.
 .PHONY: docker-build
 docker-build: build
 	mv bin/sync bin/sync-${TARGETARCH}
-	wget -O bin/sealos.tar.gz $(SEALOS) && tar zxvpf sealos.tar.gz && rm sealos.tar.gz
+	wget -O bin/sealos.tar.gz $(SEALOS) && tar zxvpf bin/sealos.tar.gz && rm bin/sealos.tar.gz
 	docker build -t $(IMG) . --build-arg TARGETARCH=${TARGETARCH}
 
 .PHONY: docker-push
