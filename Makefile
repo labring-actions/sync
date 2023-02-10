@@ -1,4 +1,5 @@
 IMG ?= labring-action/sync:dev
+TARGETARCH ?= amd64
 
 # Get the currently used golang install path (in GOPATH/bin, unless GOBIN is set)
 ifeq (,$(shell go env GOBIN))
@@ -20,7 +21,7 @@ all: build
 
 .PHONY: clean
 clean:
-	rm -f bin/*
+	rm -f bin/sync*
 
 .PHONY: build
 build: clean ## Build service-hub binary.
@@ -28,8 +29,8 @@ build: clean ## Build service-hub binary.
 
 .PHONY: docker-build
 docker-build: build
-	mv bin/sync bin/sycn-${TARGETARCH}
-	docker build -t $(IMG) .
+	mv bin/sync bin/sync-${TARGETARCH}
+	docker build -t $(IMG) . --build-arg TARGETARCH=${TARGETARCH}
 
 .PHONY: docker-push
 docker-push:

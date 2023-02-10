@@ -1,8 +1,7 @@
-FROM alpine:3.17
-
+FROM ghcr.io/labring/sealos:v4.1.4
 ARG TARGETARCH
 WORKDIR /
 
-COPY bin/sync-$TARGETARCH /sync
+COPY bin/sync-$TARGETARCH /usr/bin/sync
 
-ENTRYPOINT ["/sync"]
+ENTRYPOINT ["/usr/bin/sync"]
