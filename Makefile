@@ -23,16 +23,19 @@ all: build
 
 .PHONY: clean
 clean:
-	rm -f bin/*
+	rm -f bin/sync*
 
 .PHONY: build
 build: clean ## Build service-hub binary.
 	CGO_ENABLED=$(CGO_ENABLED) GOOS=$(GOOS) go build $(GO_BUILD_FLAGS) -o bin/sync main.go
 
+.PHONY: sealos
+sealos:
+	wget -O bin/sealos.tar.gz $(SEALOS) && tar xvf bin/sealos.tar.gz -C bin/ && rm bin/sealos.tar.gz
+
 .PHONY: docker-build
 docker-build: build
 	mv bin/sync bin/sync-${TARGETARCH}
-	wget -O bin/sealos.tar.gz $(SEALOS) && tar xvf bin/sealos.tar.gz && rm bin/sealos.tar.gz
 	docker build -t $(IMG) . --build-arg TARGETARCH=${TARGETARCH}
 
 .PHONY: docker-push
