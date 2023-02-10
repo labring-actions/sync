@@ -14,7 +14,7 @@ GOOS=linux
 CGO_ENABLED=0
 GOARCH=$(shell go env GOARCH)
 
-SEALOS="https://github.com/labring/sealos/releases/download/v4.1.4/sealos_4.1.4_linux_"+$(TARGETARCH)+".tar.gz"
+SEALOS="https://github.com/labring/sealos/releases/download/v4.1.4/sealos_4.1.4_linux_$(TARGETARCH).tar.gz"
 
 GO_BUILD_FLAGS=-trimpath -ldflags "-s -w"
 
