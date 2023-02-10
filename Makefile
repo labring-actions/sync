@@ -29,7 +29,7 @@ build: clean ## Build service-hub binary.
 
 .PHONY: docker-build
 docker-build: build
-	mv bin/sync bin/sycn-${TARGETARCH}
+	mv bin/sync bin/sync-${TARGETARCH}
 	docker build -t $(IMG) . --build-arg TARGETARCH=${TARGETARCH}
 
 .PHONY: docker-push
