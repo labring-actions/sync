@@ -1,0 +1,8 @@
+FROM alpine:3.17
+
+ARG TARGETARCH
+WORKDIR /
+
+COPY bin/sync-$TARGETARCH /sync
+
+ENTRYPOINT ["/sync"]
