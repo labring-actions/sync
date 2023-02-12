@@ -2,10 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
-	"os"
-	"os/signal"
-	"syscall"
 	"time"
 
 	"github.com/gogf/gf/os/glog"
@@ -19,22 +15,22 @@ func main() {
 	flag.StringVar(&sealosPath, "sealos-path", "sealos", "sealos path")
 	p := process.NewProcesser(jsonPath, configPath, sealosPath)
 
-	c := make(chan os.Signal)
-	signal.Notify(c, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
-	go func() {
-		for s := range c {
-			switch s {
-			case syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT:
-				fmt.Println("Program Exit...", s)
-				err := p.Exit()
-				if err != nil {
-					return
-				}
-			default:
-				fmt.Println("other signal", s)
-			}
-		}
-	}()
+	//c := make(chan os.Signal)
+	//signal.Notify(c, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
+	//go func() {
+	//	for s := range c {
+	//		switch s {
+	//		case syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT:
+	//			fmt.Println("Program Exit...", s)
+	//			err := p.Exit()
+	//			if err != nil {
+	//				return
+	//			}
+	//		default:
+	//			fmt.Println("other signal", s)
+	//		}
+	//	}
+	//}()
 
 	ticker := time.NewTicker(5 * time.Minute)
 	go func() {
