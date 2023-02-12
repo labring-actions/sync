@@ -32,15 +32,18 @@ func main() {
 	//	}
 	//}()
 
-	ticker := time.NewTicker(5 * time.Minute)
+	ticker := time.NewTicker(time.Minute)
 	go func() {
 		for {
 			select {
 			case <-ticker.C:
+				glog.Info("try to save degist.")
 				err := p.SaveDegist()
 				if err != nil {
+					glog.Error(err)
 					return
 				}
+				glog.Info("success to save degist.")
 			}
 		}
 	}()

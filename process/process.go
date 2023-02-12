@@ -33,12 +33,12 @@ func (p *Processer) Process() error {
 	}
 
 	repos := make([]string, 0, len(p.Config.Images))
-	for k := range p.Mapper.Data {
+	for k := range p.Config.Images {
 		repos = append(repos, k)
 	}
 	sort.Strings(repos)
-
-	for _, repo := range repos {
+	for id, repo := range repos {
+		glog.Info("start sync images, counts", id, "/", len(repos))
 		for _, tag := range p.Config.Images[repo] {
 			if err := p.ProcessOneImage(fmt.Sprintf("%s:%s", repo, tag)); err != nil {
 				return err
@@ -96,7 +96,7 @@ func (p *Processer) ProcessOneImage(image string) error {
 
 func (p *Processer) Check(image string) (bool, error) {
 	glog.Info("check image", image)
-	inspectInfo, err := p.Driver.Inspect(image)
+	inspectInfo, err := p.Driver.Inspect(fmt.Sprintf("docker://%s", image))
 	if err != nil {
 		return false, err
 	}
@@ -126,6 +126,7 @@ func (p *Processer) MapImage(image string) error {
 	if err != nil {
 		return err
 	}
+
 	p.Mapper.Data[image] = inspectInfo
 	return nil
 }
