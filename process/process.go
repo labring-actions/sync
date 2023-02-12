@@ -96,7 +96,7 @@ func (p *Processer) ProcessOneImage(image string) error {
 
 func (p *Processer) Check(image string) (bool, error) {
 	glog.Info("check image", image)
-	inspectInfo, err := p.Driver.Inspect(fmt.Sprintf("docker://%s", image))
+	inspectInfo, err := p.Driver.Inspect(image)
 	if err != nil {
 		return false, err
 	}
