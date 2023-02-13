@@ -131,7 +131,7 @@ func (p *Processer) MapImage(image string) error {
 	return nil
 }
 
-func (p *Processer) SaveDegist() error {
+func (p *Processer) SaveDigest() error {
 	if err := p.Mapper.ToJsonFile(); err != nil {
 		return err
 	}
@@ -139,7 +139,7 @@ func (p *Processer) SaveDegist() error {
 }
 
 func (p *Processer) Exit() error {
-	err := p.SaveDegist()
+	err := p.SaveDigest()
 	if err != nil {
 		return err
 	}
