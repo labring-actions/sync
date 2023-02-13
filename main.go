@@ -37,18 +37,21 @@ func main() {
 		for {
 			select {
 			case <-ticker.C:
-				glog.Info("try to save degist.")
-				err := p.SaveDegist()
+				glog.Info("try to save digest.")
+				err := p.SaveDigest()
 				if err != nil {
 					glog.Error(err)
 					return
 				}
-				glog.Info("success to save degist.")
+				glog.Info("success to save digest.")
 			}
 		}
 	}()
 
 	err := p.Process()
+
+	p.Exit()
+
 	if err != nil {
 		glog.Error(err)
 		return

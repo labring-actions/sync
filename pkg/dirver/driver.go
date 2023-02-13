@@ -28,8 +28,23 @@ func (d *Driver) Do(args []string) (string, error) {
 	return string(output), nil
 }
 
+func (d *Driver) RetryDo(args []string) (string, error) {
+	var retErr error
+	for i := 0; i < 3; i++ {
+		out, err := d.Do(args)
+		if err != nil {
+			glog.Warning("try to ", args, " :", i, "...")
+			glog.Warning(out)
+			retErr = err
+			continue
+		}
+		return out, nil
+	}
+	return "", retErr
+}
+
 func (d *Driver) Inspect(image string) (string, error) {
-	inspectInfo, err := d.Do([]string{"inspect", fmt.Sprintf("docker://%s", image)})
+	inspectInfo, err := d.RetryDo([]string{"inspect", fmt.Sprintf("docker://%s", image)})
 	inspectInfo = strings.Replace(inspectInfo, " ", "", -1)
 	inspectInfo = strings.Replace(inspectInfo, "\t", "", -1)
 	inspectInfo = strings.Replace(inspectInfo, "\n", "", -1)
@@ -38,21 +53,21 @@ func (d *Driver) Inspect(image string) (string, error) {
 }
 
 func (d *Driver) Pull(image string) (string, error) {
-	return d.Do([]string{"pull", image})
+	return d.RetryDo([]string{"pull", image})
 }
 
 func (d *Driver) Tag(id string, image string) (string, error) {
-	return d.Do([]string{"tag", id, image})
+	return d.RetryDo([]string{"tag", id, image})
 }
 
 func (d *Driver) Push(image string) (string, error) {
-	return d.Do([]string{"push", image})
+	return d.RetryDo([]string{"push", image})
 }
 
 func (d *Driver) Login(registry, username, password string) (string, error) {
-	return d.Do([]string{"login", "-u", username, "-p", password, registry})
+	return d.RetryDo([]string{"login", "-u", username, "-p", password, registry})
 }
 
 func (d *Driver) LoginK(registry, filePath string) (string, error) {
-	return d.Do([]string{"login", "-k", filePath, registry})
+	return d.RetryDo([]string{"login", "-k", filePath, registry})
 }
