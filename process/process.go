@@ -2,6 +2,7 @@ package process
 
 import (
 	"fmt"
+	"sort"
 
 	"github.com/gogf/gf/os/glog"
 	"github.com/labring-actions/sync/pkg/config"
@@ -30,11 +31,17 @@ func (p *Processer) Process() error {
 	if err := p.Mapper.FromJsonFile(); err != nil {
 		return err
 	}
-	for repo, tagList := range p.Config.Images {
-		for _, tag := range tagList {
+
+	repos := make([]string, 0, len(p.Config.Images))
+	for k := range p.Config.Images {
+		repos = append(repos, k)
+	}
+	sort.Strings(repos)
+	for id, repo := range repos {
+		glog.Info("start sync images, counts", id, "/", len(repos))
+		for _, tag := range p.Config.Images[repo] {
 			if err := p.ProcessOneImage(fmt.Sprintf("%s:%s", repo, tag)); err != nil {
-				glog.Error(err)
-				continue
+				return err
 			}
 		}
 	}
@@ -88,7 +95,7 @@ func (p *Processer) ProcessOneImage(image string) error {
 }
 
 func (p *Processer) Check(image string) (bool, error) {
-	glog.Info("Check ", image)
+	glog.Info("check image", image)
 	inspectInfo, err := p.Driver.Inspect(image)
 	if err != nil {
 		return false, err
@@ -119,6 +126,7 @@ func (p *Processer) MapImage(image string) error {
 	if err != nil {
 		return err
 	}
+
 	p.Mapper.Data[image] = inspectInfo
 	return nil
 }
