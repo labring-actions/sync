@@ -4,12 +4,12 @@ on:
     branches: [ main ]
     paths:
       - "skopeo/src.yaml"
-      - ".github/workflows/skopeo-sync.yaml"
+      - ".github/workflows/skopeo-sync.yml"
   pull_request:
     branches: [ main ]
     paths:
       - "skopeo/src.yaml"
-      - ".github/workflows/skopeo-sync.yaml"
+      - ".github/workflows/skopeo-sync.yml"
   schedule:
     - cron: '0 16 * * *'
 
