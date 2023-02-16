@@ -12,6 +12,14 @@ on:
       - ".github/workflows/skopeo-sync.yml"
   schedule:
     - cron: '0 16 * * *'
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+      tags:
+        description: 'sync images in skopeo/src.yml'
 
 env:
   USERNAME: ${{ secrets.SEALOS_REGISTRY_USER }}
