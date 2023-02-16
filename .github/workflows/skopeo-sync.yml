@@ -4,14 +4,22 @@ on:
     branches: [ main ]
     paths:
       - "skopeo/src.yaml"
-      - ".github/workflows/skopeo-sync.yaml"
+      - ".github/workflows/skopeo-sync.yml"
   pull_request:
     branches: [ main ]
     paths:
       - "skopeo/src.yaml"
-      - ".github/workflows/skopeo-sync.yaml"
+      - ".github/workflows/skopeo-sync.yml"
   schedule:
     - cron: '0 16 * * *'
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+      tags:
+        description: 'sync images in skopeo/src.yml'
 
 env:
   USERNAME: ${{ secrets.SEALOS_REGISTRY_USER }}
@@ -28,6 +36,11 @@ jobs:
       - name: check podman
         run: |
           sudo podman version
+
+      - name: echo
+        run: | 
+          echo $USERNAME
+          echo $PASSWORD
 
       - name: sync images
         run: |

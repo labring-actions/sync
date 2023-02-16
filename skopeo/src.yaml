@@ -1,4 +1,4 @@
 docker.io:
   images-by-tag-regex:
-    kubernetes: v1.2[\w-.]*$
+    labring/kubernetes: v1.2[\w-.]*$
   tls-verify: false
