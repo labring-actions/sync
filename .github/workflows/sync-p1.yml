@@ -40,6 +40,6 @@ jobs:
       - name: sync images
         run: |
           sudo podman run -it --rm -v ${PWD}:/workspace -w /workspace quay.io/skopeo/stable:latest \
-          sync --src yaml --dest docker skopeo/src.yaml hub.sealos.cn/labring \
+          sync --src yaml --dest docker skopeo/images-part1.yml hub.sealos.cn/labring \
           --dest-username $USERNAME --dest-password "$PASSWORD" \
           --keep-going --retry-times 2
