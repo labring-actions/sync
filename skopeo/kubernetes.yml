@@ -1,9 +1,4 @@
 docker.io:
-  images:
-    labring/calico: []
-    labring/helm: []
-    labring/cert-manager: []
-    labring/openebs: []
   images-by-tag-regex:
     labring/kubernetes: ^v(1\.2[0-9]\.[1-9]?[0-9]?)(\.)?(-(4\.[1-9]\.[5-9]))?(-(amd64|arm64))?$
     labring/kubernetes-docker: ^v(1\.2[0-9]\.[1-9]?[0-9]?)(\.)?(-(4\.[1-9]\.[5-9]))?(-(amd64|arm64))?$

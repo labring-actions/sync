@@ -3,15 +3,15 @@ on:
   push:
     branches: [ main ]
     paths:
-      - "skopeo/src.yaml"
-      - ".github/workflows/skopeo-sync.yml"
+      - "skopeo/images-part2.yml"
+      - ".github/workflows/*"
   pull_request:
     branches: [ main ]
     paths:
-      - "skopeo/src.yaml"
-      - ".github/workflows/skopeo-sync.yml"
+      - "skopeo/images-part2.yml"
+      - ".github/workflows/*"
   schedule:
-    - cron: '0 16 * * *'
+    - cron: '0 16 1 * *'
   workflow_dispatch:
     inputs:
       logLevel:
@@ -19,7 +19,7 @@ on:
         required: true
         default: 'warning'
       tags:
-        description: 'sync images in skopeo/src.yml'
+        description: 'sync images in skopeo/images.yml'
 
 env:
   USERNAME: ${{ secrets.SEALOS_REGISTRY_USER }}
