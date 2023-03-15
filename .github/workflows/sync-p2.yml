@@ -42,4 +42,4 @@ jobs:
           sudo podman run -it --rm -v ${PWD}:/workspace -w /workspace quay.io/skopeo/stable:latest \
           sync --src yaml --dest docker skopeo/images-part2.yml hub.sealos.cn/labring \
           --dest-username $USERNAME --dest-password "$PASSWORD" \
-          --keep-going --retry-times 2
+          --keep-going --retry-times 2 --all
