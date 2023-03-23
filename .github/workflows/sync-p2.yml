@@ -11,7 +11,7 @@ on:
       - "skopeo/images-part2.yml"
       - ".github/workflows/*"
   schedule:
-    - cron: '0 16 0 * *'
+    - cron: '0 16 * * *'
   workflow_dispatch:
     inputs:
       logLevel:
